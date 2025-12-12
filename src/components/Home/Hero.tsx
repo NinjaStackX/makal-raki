@@ -1,6 +1,4 @@
 import React from "react";
-import { GrTechnology } from "react-icons/gr";
-
 import CloudImage from "@/../public/cloud-hosting.png";
 import Image from "next/image";
 

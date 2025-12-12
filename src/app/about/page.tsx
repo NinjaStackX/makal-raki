@@ -1,6 +1,5 @@
 import Hero from "@/components/Home/Hero";
 import React from "react";
-import { GrTechnology } from "react-icons/gr";
 
 const page = () => {
   return (

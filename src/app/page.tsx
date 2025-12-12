@@ -1,6 +1,6 @@
 import Hero from "@/components/Home/Hero";
 import Plans from "@/components/Home/Plans";
-import { TiTick } from "react-icons/ti";
+// import { TiTick } from "react-icons/ti";
 
 const HomePage = () => {
   return (
@@ -10,14 +10,10 @@ const HomePage = () => {
         <br />
         <div>
           <div className="flex">
-            <TiTick /> Easy To Use Control Panel
+            {/* <TiTick /> Easy To Use Control Panel */}
           </div>
-          <div className="flex">
-            <TiTick /> Secure Hosting
-          </div>
-          <div className="flex">
-            <TiTick /> Website Maintenance
-          </div>
+          <div className="flex">{/* <TiTick /> Secure Hosting */}</div>
+          <div className="flex">{/* <TiTick /> Website Maintenance */}</div>
         </div>
       </Hero>
       <Plans />

@@ -1,7 +1,7 @@
 import { Plan } from "@/utils/types";
-import { log } from "node:console";
-import { TiTick } from "react-icons/ti";
-import { VscError } from "react-icons/vsc";
+// import { log } from "node:console";
+// import { TiTick } from "react-icons/ti";
+// import { VscError } from "react-icons/vsc";
 const Features = [
   "100 Website",
   " 100 GB SSD Storage",
@@ -36,7 +36,7 @@ const WebHostingPlan = ({ status, price }: Plan) => {
                 key={index}
                 className="flex items-center text-green-700 mb-1 ps-3"
               >
-                <TiTick />
+                {/* <TiTick /> */}
                 {item}
               </div>
             );
@@ -46,7 +46,7 @@ const WebHostingPlan = ({ status, price }: Plan) => {
                 key={index}
                 className="flex items-center text-gray-700 mb-1 ps-3"
               >
-                <VscError />
+                {/* <VscError /> */}
                 {item}
               </div>
             );
