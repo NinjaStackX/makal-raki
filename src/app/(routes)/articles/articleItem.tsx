@@ -16,12 +16,9 @@ const ArticleItem = ({ article }: ArticleItemsProps) => {
         className="text-xl bg-purple-700 hover:bg-purple-800 w-full block text-center p-1 text-white rounded-lg"
         href={{
           pathname: `/articles/${article.id}`,
-          query: {
-            id: article.id,
-          },
         }}
       >
-        Show Details
+        Read article
       </Link>
     </div>
   );

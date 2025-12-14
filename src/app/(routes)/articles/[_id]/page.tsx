@@ -5,12 +5,12 @@ import ArticleMeta from "./ArticleMeta";
 import { getArticleById, getAuthorNameByUserId } from "@/lib/articles";
 
 export default async function Page({
-  searchParams,
+  params,
 }: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = await searchParams;
-  const article = await getArticleById(id);
+  const { _id } = await params;
+  const article = await getArticleById(_id);
   const author = await getAuthorNameByUserId(article?.userId);
   let title = article?.title || "Default Title";
   let body = article?.body || "Default body content.";
