@@ -1,10 +1,9 @@
 "use client";
 import Link from "next/link";
 import styles from "./header.module.css";
-// import { GrTechnology } from "react-icons/gr";
+import { Globe, ListChevronsDownUp, ListChevronsUpDown } from "lucide-react";
+
 import { useState } from "react";
-// import { AiOutlineMenu } from "react-icons/ai";
-// import { IoMdClose } from "react-icons/io";
 
 interface NavbarProps {
   isAdmin: boolean;
@@ -18,11 +17,15 @@ const Navbar = ({ isAdmin }: NavbarProps) => {
       <div>
         <Link href="/" className={styles.logo}>
           CLOUD
-          {/* <GrTechnology /> */}
+          <Globe />
           HOSTING
         </Link>
         <div className={styles.menu}>
-          {/* {toggle ? (<IoMdClose onClick={() => setToggle(prev => !prev)} />) : (<AiOutlineMenu onClick={() => setToggle(prev => !prev)} />)} */}
+          {toggle ? (
+            <ListChevronsDownUp onClick={() => setToggle((prev) => !prev)} />
+          ) : (
+            <ListChevronsUpDown onClick={() => setToggle((prev) => !prev)} />
+          )}
         </div>
       </div>
       <div

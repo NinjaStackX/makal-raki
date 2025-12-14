@@ -1,7 +1,6 @@
 import { Plan } from "@/utils/types";
-// import { log } from "node:console";
-// import { TiTick } from "react-icons/ti";
-// import { VscError } from "react-icons/vsc";
+import { CheckCheck, CircleX } from "lucide-react";
+
 const Features = [
   "100 Website",
   " 100 GB SSD Storage",
@@ -27,7 +26,6 @@ const WebHostingPlan = ({ status, price }: Plan) => {
 
         {Features.map((item, index) => {
           const val: Number = status == "Free" ? 2 : status == "Plus" ? 4 : 6;
-          //   console.log(val);
           const x = index;
 
           if (Number(val) > Number(x)) {
@@ -36,7 +34,7 @@ const WebHostingPlan = ({ status, price }: Plan) => {
                 key={index}
                 className="flex items-center text-green-700 mb-1 ps-3"
               >
-                {/* <TiTick /> */}
+                <CheckCheck />
                 {item}
               </div>
             );
@@ -46,7 +44,7 @@ const WebHostingPlan = ({ status, price }: Plan) => {
                 key={index}
                 className="flex items-center text-gray-700 mb-1 ps-3"
               >
-                {/* <VscError /> */}
+                <CircleX />
                 {item}
               </div>
             );
