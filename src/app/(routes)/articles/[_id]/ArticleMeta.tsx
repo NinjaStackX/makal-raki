@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 
 const ArticleMeta = ({
   author,

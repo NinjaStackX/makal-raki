@@ -1,19 +1,9 @@
 // src/lib/api.ts
 import type { Article as ArticleType } from "@/utils/types"; // اختياري: إذا عندك نوع مخصص
-import type { Article as PrismaArticle } from "@prisma/client";
+
 import { prisma } from "../lib/prisma";
 
-/**
- * ترجع المقالة مع معلومات المؤلف والتعليقات
- * - id: string (يتحوّل إلى number داخلياً)
- */
-export async function getArticleById(id: string): Promise<
-  | (PrismaArticle & {
-      author?: { id: number; name?: string; email: string };
-      comments: { id: number; content: string; articleId: number }[];
-    })
-  | null
-> {
+export async function getArticleById(id: string) {
   if (!id || !/^\d+$/.test(id)) return null;
   const articleId = Number(id);
 
@@ -32,8 +22,7 @@ export async function getArticleById(id: string): Promise<
     });
 
     return article;
-  } catch (err: any) {
-    console.error("getArticleById error:", err?.message ?? err);
+  } catch (err) {
     return null;
   }
 }
@@ -52,8 +41,7 @@ export async function getAuthorNameByUserId(
       select: { name: true },
     });
     return user?.name ?? undefined;
-  } catch (err: any) {
-    console.error("getAuthorNameByUserId error:", err?.message ?? err);
+  } catch (err) {
     return undefined;
   }
 }

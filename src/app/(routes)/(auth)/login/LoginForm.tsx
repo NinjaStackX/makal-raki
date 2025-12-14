@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -13,8 +12,34 @@ const LoginForm = () => {
 
   const formSubmitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email === "") return toast.error("Email is required");
-    if (password === "") return toast.error("Password is required");
+    setLoading(true);
+
+    if (email && password) {
+      try {
+        const response = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          toast.success("Login successful!");
+          router.refresh();
+          router.push("/");
+        } else {
+          toast.error(data.message || "Login failed. Please try again.");
+        }
+      } catch (error) {
+        toast.error("An error occurred. Please try again.");
+        console.error(error);
+      }
+    } else {
+      toast.error("Please fill in all fields.");
+    }
   };
 
   return (
