@@ -1,8 +1,8 @@
 export type Article = {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
+  userId?: number;
+  title?: string;
+  body?: string;
+  publishedAt?: string;
 };
 export type Product = {
   _id: string;

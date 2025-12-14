@@ -1,9 +1,4 @@
-export type Article = {
-  userId?: number;
-  title?: string;
-  body?: string;
-  publishedAt?: string;
-};
+import { Article } from "@/utils/types";
 
 export async function getArticleById(id: string): Promise<Article | null> {
   if (!id) return null;
