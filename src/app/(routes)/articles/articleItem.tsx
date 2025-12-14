@@ -1,4 +1,4 @@
-import { Article, Product } from "@/utils/types";
+import { Article } from "@/utils/types";
 import Link from "next/link";
 interface ArticleItemsProps {
   article: Article;
@@ -13,8 +13,15 @@ const ArticleItem = ({ article }: ArticleItemsProps) => {
       <p className="my-2 text-xl p-1 line-clamp-1">{article.body}</p>
 
       <Link
-        className="text-xl bg-purple-700 hover:bg-purple-800 w-full block text-center p-1 text-white rounded-lg "
-        href={`/articles/${article.id}`}
+        className="text-xl bg-purple-700 hover:bg-purple-800 w-full block text-center p-1 text-white rounded-lg"
+        href={{
+          pathname: `/articles/${article.id}`,
+          query: {
+            title: article.title,
+            body: article.body,
+            author: article.userId,
+          },
+        }}
       >
         Show Details
       </Link>

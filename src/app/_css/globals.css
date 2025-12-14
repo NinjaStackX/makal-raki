@@ -11,7 +11,7 @@ body {
   background-color: var(--bg--color);
 }
 .fix-height {
-  height: calc(100vh - 150px);
+  min-height: calc(100vh - 150px);
 }
 .ccenter {
   display: flex;

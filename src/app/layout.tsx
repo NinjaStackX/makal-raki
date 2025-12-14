@@ -32,7 +32,12 @@ export default function RootLayout({
           theme="colored"
           transition={Bounce}
         />
-        <main className="p-2.5">{children}</main>
+        <main
+          className="p-2.5 fix-height 
+        "
+        >
+          {children}
+        </main>
 
         <Footer />
       </body>

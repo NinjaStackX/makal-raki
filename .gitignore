@@ -51,3 +51,11 @@ yarn-error.log*
 next-env.d.ts
 
 /src/generated/prisma
+/prisma/migrations
+!.prisma/client/index.d.ts
+!.prisma/client/index.js
+!.prisma/client/runtime/index.d.ts
+!.prisma/client/runtime/index.js
+!.prisma/client/runtime/query-engine-*
+!.prisma/client/runtime/libquery_engine-*.so.node
+!.prisma/client/runtime/libquery_engine-*.dylib.node
