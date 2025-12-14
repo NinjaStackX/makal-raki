@@ -17,9 +17,7 @@ const ArticleItem = ({ article }: ArticleItemsProps) => {
         href={{
           pathname: `/articles/${article.id}`,
           query: {
-            title: article.title,
-            body: article.body,
-            author: article.userId,
+            id: article.id,
           },
         }}
       >
