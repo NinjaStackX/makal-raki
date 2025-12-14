@@ -2,7 +2,12 @@ import React from "react";
 import CloudImage from "@/../public/cloud-hosting.png";
 import Image from "next/image";
 
-const Hero = ({ children, title }) => {
+type HeroProps = {
+  children: React.ReactNode;
+  title: string;
+};
+
+const Hero = ({ children, title }: HeroProps) => {
   return (
     <section className="justify-around md:flex lg:flex ">
       <div

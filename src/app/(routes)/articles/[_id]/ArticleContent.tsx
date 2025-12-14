@@ -2,7 +2,7 @@
 import React from "react";
 import { AnimatePresence, motion } from "motion/react";
 
-const ArticleContent = ({ title, body }: { title: String; body: String }) => {
+const ArticleContent = ({ title, body }: { title: string; body: string }) => {
   return (
     <>
       <motion.article

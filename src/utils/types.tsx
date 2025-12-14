@@ -17,6 +17,6 @@ export type Err = {
   reset: () => void;
 };
 export type Plan = {
-  status: String;
-  price: Number;
+  status: string;
+  price: number;
 };

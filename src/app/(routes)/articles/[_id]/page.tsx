@@ -7,14 +7,14 @@ import { getArticleById, getAuthorNameByUserId } from "@/lib/articles";
 export default async function Page({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ _id: string }>;
 }) {
   const { _id } = await params;
   const article = await getArticleById(_id);
   const author = await getAuthorNameByUserId(article?.userId);
-  let title = article?.title || "Default Title";
-  let body = article?.body || "Default body content.";
-  let publishedAt = new Date().toLocaleDateString();
+  const title = article?.title || "Default Title";
+  const body = article?.body || "Default body content.";
+  const publishedAt = new Date().toLocaleDateString();
   return (
     <div className="fix-height flex items-center justify-center p-4">
       <div>

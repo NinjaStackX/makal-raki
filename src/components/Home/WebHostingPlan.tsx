@@ -25,7 +25,7 @@ const WebHostingPlan = ({ status, price }: Plan) => {
         </h5>
 
         {Features.map((item, index) => {
-          const val: Number = status == "Free" ? 2 : status == "Plus" ? 4 : 6;
+          const val: number = status == "Free" ? 2 : status == "Plus" ? 4 : 6;
           const x = index;
 
           if (Number(val) > Number(x)) {

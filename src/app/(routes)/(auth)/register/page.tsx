@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 const RegisterForm = () => {
   const [formi, setFormi] = useState({ username: "", email: "", password: "" });
-  const submitHandler = (e: FocusEvent) => {
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!formi.email || !formi.password || !formi.username)
       toast.error("error");

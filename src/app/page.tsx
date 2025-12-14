@@ -57,7 +57,6 @@ const HomePage = () => {
         </div>
       </Hero>
       <Plans />
-      <button>create</button>
     </div>
   );
 };
