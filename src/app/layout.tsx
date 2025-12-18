@@ -3,6 +3,7 @@ import { Bounce, ToastContainer } from "react-toastify";
 import "./_css/globals.css";
 import Header from "@/components/header/Header";
 import Footer from "../components/Footer";
+import { GlobalErrorBoundary } from "./GlobalErrorBoundary";
 
 export const metadata: Metadata = {
   title: "Hostigre app",
@@ -16,30 +17,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <Header />
-        <ToastContainer
-          position="top-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-          transition={Bounce}
-        />
-        <main
-          className="p-2.5 fix-height 
-        "
-        >
-          {children}
-        </main>
-
-        <Footer />
-      </body>
+      <GlobalErrorBoundary>
+        <ToastContainer position="top-right" autoClose={3000} />
+        <body>
+          <Header />
+          <main className="p-2.5 fix-height  ">{children}</main>
+          <Footer />
+        </body>
+      </GlobalErrorBoundary>
     </html>
   );
 }

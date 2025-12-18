@@ -59,9 +59,9 @@ export async function loginAction(formData: FormData) {
     }
 
     const isMatch = await bcrypt.compare(password, Ouser.password);
-    // if (!isMatch) {
-    //   throw new Error("Invalid credentials");
-    // }
+    if (!isMatch) {
+      throw new Error("Invalid credentials");
+    }
 
     // مثال: لا تُرجع الحقول الحساسة
     const user = { id: Ouser.id, email: Ouser.email };
