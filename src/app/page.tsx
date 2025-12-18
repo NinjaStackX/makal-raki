@@ -5,7 +5,7 @@ import { CheckCheck } from "lucide-react";
 
 const HomePage = () => {
   return (
-    <div className="flex-col items-center">
+    <div className="flex-col justify-center items-center">
       <Hero title={"Cloud Hosting"}>
         <p>The best web hosting solution for your online success</p>
         <br />

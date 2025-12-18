@@ -1,25 +1,76 @@
-const Page = () => {
+"use client";
+import React from "react";
+import styled from "styled-components";
+
+const Loader = () => {
   return (
-    <section className="m-5">
-      <div className="flex items-center justify-center flex-wrap gap-7">
-        {Array.from({ length: 8 }).map((_, i) => (
-          <div
-            key={i}
-            className="p-5 rounded-lg shadow-lg border-2 border-gray-300 w-[100px] md:w-2/5 lg:w-1/4 animate-pulse"
-          >
-            {/* Title */}
-            <div className="h-5 bg-gray-300 rounded w-3/4 mb-4"></div>
-
-            {/* Paragraph */}
-            <div className="h-4 bg-gray-300 rounded w-full mb-3"></div>
-
-            {/* Button */}
-            <div className="h-10 bg-gray-300 rounded w-full"></div>
-          </div>
-        ))}
+    <StyledWrapper>
+      <div className=" w-full h-full flex justify-center items-center">
+        <section className="dots-container">
+          <div className="dot" />
+          <div className="dot" />
+          <div className="dot" />
+          <div className="dot" />
+          <div className="dot" />
+        </section>
       </div>
-    </section>
+    </StyledWrapper>
   );
 };
 
-export default Page;
+const StyledWrapper = styled.div`
+  .dots-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+  }
+
+  .dot {
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+    border-radius: 10px;
+    background-color: #b3d4fc;
+    animation: pulse 1.5s infinite ease-in-out;
+  }
+
+  .dot:last-child {
+    margin-right: 0;
+  }
+
+  .dot:nth-child(1) {
+    animation-delay: -0.3s;
+  }
+
+  .dot:nth-child(2) {
+    animation-delay: -0.1s;
+  }
+
+  .dot:nth-child(3) {
+    animation-delay: 0.1s;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(0.8);
+      background-color: #b3d4fc;
+      box-shadow: 0 0 0 0 rgba(178, 212, 252, 0.7);
+    }
+
+    50% {
+      transform: scale(1.2);
+      background-color: #6793fb;
+      box-shadow: 0 0 0 10px rgba(178, 212, 252, 0);
+    }
+
+    100% {
+      transform: scale(0.8);
+      background-color: #b3d4fc;
+      box-shadow: 0 0 0 0 rgba(178, 212, 252, 0.7);
+    }
+  }
+`;
+
+export default Loader;

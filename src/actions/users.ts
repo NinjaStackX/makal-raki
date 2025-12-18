@@ -3,8 +3,8 @@ import React from "react";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { revalidatePath } from "next/cache";
-import { revalidateTag } from "next/cache";
-
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 export const metadata = { title: "Register" };
 
 export async function registerAction(formData: FormData) {
@@ -22,13 +22,13 @@ export async function registerAction(formData: FormData) {
     throw new Error("Password must be at least 8 characters");
   }
 
-  //   const hashed = await bcrypt.hash(password, 10);
+  const hashed = await bcrypt.hash(password, 10);
 
   const user = await prisma.user.create({
     data: {
       name,
       email,
-      password, //: hashed,
+      password: hashed,
     },
   });
 
@@ -36,11 +36,6 @@ export async function registerAction(formData: FormData) {
 
   return user;
 }
-// app/(auth)/login/page.tsx  <-- Server Component (لا 'use client' هنا)
-
-import { cookies } from "next/headers"; // لو حبيت تضع جلسة لاحقاً
-import { redirect } from "next/navigation";
-
 export async function loginAction(formData: FormData) {
   "use server";
 
@@ -66,9 +61,10 @@ export async function loginAction(formData: FormData) {
     // مثال: لا تُرجع الحقول الحساسة
     const user = { id: Ouser.id, email: Ouser.email };
 
-    // هنا يمكنك إنشاء جلسة أو وضع كوكيز أو redirect
+    const cookieStore = await cookies();
+    cookieStore.set("user", String(user.id), { httpOnly: true });
 
-    // return user;
+    return user;
   } catch (err) {
     // سجل الخطأ على السيرفر لأغراض الـ debugging
     console.error("loginAction error:", err);

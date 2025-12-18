@@ -17,14 +17,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <GlobalErrorBoundary>
+      <body>
         <ToastContainer position="top-right" autoClose={3000} />
-        <body>
+        <GlobalErrorBoundary>
           <Header />
           <main className="p-2.5 fix-height  ">{children}</main>
           <Footer />
-        </body>
-      </GlobalErrorBoundary>
+        </GlobalErrorBoundary>
+      </body>
     </html>
   );
 }

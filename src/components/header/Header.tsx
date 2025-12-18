@@ -1,18 +1,16 @@
 import Link from "next/link";
 import styles from "./header.module.css";
 import Navbar from "./Navbar";
+import BtnAuth from "./BtnAuth";
+import { useUser } from "@/lib/useUser";
 
-const Header = () => {
+const Header = async () => {
+  const { user } = await useUser();
   return (
     <header className={styles.header}>
-      <Navbar isAdmin={false} />
+      <Navbar isAdmin={user?.role === "ADMIN"} />
       <div className={styles.right}>
-        <Link className={styles.btn} href="/login">
-          Login
-        </Link>
-        <Link className={styles.btn} href="/register">
-          Register
-        </Link>
+        <BtnAuth />
       </div>
     </header>
   );

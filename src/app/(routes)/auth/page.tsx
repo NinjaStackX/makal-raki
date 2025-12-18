@@ -2,8 +2,12 @@ import { loginAction, registerAction } from "@/actions/users";
 import React from "react";
 
 import "./styles.css";
+import { useUser } from "@/lib/useUser";
+import { redirect } from "next/navigation";
 
-const page = () => {
+const page = async () => {
+  const { user } = await useUser();
+  if (user) redirect("/dashboard");
   return (
     <div className="fix-height flex flex-col items-center justify-center">
       <div className="wrapper">
