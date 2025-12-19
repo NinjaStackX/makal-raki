@@ -31,6 +31,11 @@ export async function registerAction(formData: FormData) {
       password: hashed,
     },
   });
+  const cookieStore = await cookies();
+  cookieStore.set("user", String(user.id), {
+    httpOnly: true,
+    maxAge: 60 * 60 * 24 * 7,
+  });
 
   revalidatePath("/");
 
@@ -62,7 +67,10 @@ export async function loginAction(formData: FormData) {
     const user = { id: Ouser.id, email: Ouser.email };
 
     const cookieStore = await cookies();
-    cookieStore.set("user", String(user.id), { httpOnly: true });
+    cookieStore.set("user", String(user.id), {
+      httpOnly: true,
+      maxAge: 60 * 60 * 24 * 7,
+    });
 
     return user;
   } catch (err) {
