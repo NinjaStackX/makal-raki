@@ -61,7 +61,6 @@ export async function fetchArticles(): Promise<ArticleType[]> {
       },
     });
 
-    // إذا أردت تحويل شكل البيانات ليتوافق مع واجهة Article في utils/types
     return articles.map((a) => ({
       id: a.id,
       title: a.title,

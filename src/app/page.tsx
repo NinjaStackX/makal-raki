@@ -1,5 +1,6 @@
 import Hero from "@/components/Home/Hero";
 import Plans from "@/components/Home/Plans";
+import BtnDialog from "@/utils/dialogs/BtnDialog";
 
 import { CheckCheck } from "lucide-react";
 
@@ -9,6 +10,7 @@ const HomePage = () => {
       <Hero title={"Cloud Hosting"}>
         <p>The best web hosting solution for your online success</p>
         <br />
+
         <div>
           <div className="flex">
             <CheckCheck /> Easy To Use Control Panel
