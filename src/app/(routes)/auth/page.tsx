@@ -2,11 +2,11 @@ import { loginAction, registerAction } from "@/actions/users";
 import React from "react";
 
 import "./styles.css";
-import { useUser } from "@/lib/useUser";
+import { useAuth } from "@/hooks/useAuth";
 import { redirect } from "next/navigation";
 
 const page = async () => {
-  const { user } = await useUser();
+  const { user } = await useAuth();
   if (user) redirect("/dashboard");
   return (
     <div className="fix-height flex flex-col items-center justify-center">

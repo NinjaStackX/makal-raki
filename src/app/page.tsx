@@ -1,6 +1,5 @@
 import Hero from "@/components/Home/Hero";
 import Plans from "@/components/Home/Plans";
-import BtnDialog from "@/utils/dialogs/BtnDialog";
 
 import { CheckCheck } from "lucide-react";
 

@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { useUser } from "@/lib/useUser";
+import { useAuth } from "@/hooks/useAuth";
 import { Trash2 } from "lucide-react";
 import { redirect } from "next/navigation";
 
@@ -7,7 +7,7 @@ import React from "react";
 import Dashboard from "./Dashboard";
 
 const page = async () => {
-  const { user } = await useUser();
+  const { user } = await useAuth();
   if (!user || user.role !== "ADMIN") {
     redirect("/");
   }

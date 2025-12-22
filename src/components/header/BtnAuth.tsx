@@ -1,12 +1,12 @@
 import { prisma } from "@/lib/prisma";
-import { useUser } from "@/lib/useUser";
+import { useAuth } from "@/hooks/useAuth";
 import { cookies } from "next/headers";
 import Link from "next/link";
 
 import React from "react";
 
 const BtnAuth = async () => {
-  const { user } = await useUser();
+  const { user } = await useAuth();
 
   if (user) {
     return (

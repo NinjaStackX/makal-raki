@@ -1,9 +1,9 @@
-import { useUser } from "@/lib/useUser";
+import { useAuth } from "@/hooks/useAuth";
 import { redirect } from "next/navigation";
 import DashBoard from "./DashBoard";
 
 export default async function Page() {
-  const { user } = await useUser();
+  const { user } = await useAuth();
   if (user == null) {
     redirect("/auth");
   }
