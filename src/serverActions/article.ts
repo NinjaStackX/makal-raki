@@ -17,19 +17,6 @@ export async function fetchArticles(): Promise<Article[]> {
   return articles;
 }
 
-export async function getArticleById(idd: String) {
-  const id = Number(idd);
-  const article = await prisma.article.findUnique({
-    where: { id },
-    include: {
-      comments: true,
-      author: true,
-    },
-  });
-
-  return article;
-}
-
 export async function createArticle(formData: FormData): Promise<void> {
   // Parse values from the submitted FormData. Form fields should be named
   // `title`, `body`, `published`, and `authorId` in the form.
@@ -101,4 +88,47 @@ export async function updateArticle(formData: FormData) {
 export async function deleteArticle(id: number) {
   await prisma.article.delete({ where: { id } });
   revalidatePath("/");
+}
+
+export async function updateArticleAction(formData: FormData) {
+  const id = Number(formData.get("id"));
+  const title = formData.get("title") as string;
+  const body = formData.get("body") as string;
+
+  await prisma.article.update({
+    where: { id },
+    data: { title, body },
+  });
+
+  revalidatePath("/profile"); // تحديث صفحة البروفايل فوراً
+}
+export async function getArticleById(idd: string | number) {
+  pr({ idd });
+  // 1. التأكد من وجود قيمة
+  if (!idd) return null;
+
+  // 2. تحويلها لرقم بأمان
+  const id = Number(idd);
+
+  // 3. التأكد أن التحويل نجح وليس NaN
+  if (isNaN(id)) {
+    console.error("ID غير صالح:", idd);
+    return null;
+  }
+
+  try {
+    const article = await prisma.article.findUnique({
+      where: {
+        id: id, // تأكد من كتابتها بوضوح هنا
+      },
+      include: {
+        comments: true,
+        author: true,
+      },
+    });
+    return article;
+  } catch (error) {
+    console.error("Prisma Error:", error);
+    return null;
+  }
 }
