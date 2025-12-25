@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 
 import { Contact2Icon, LogOut, PersonStandingIcon } from "lucide-react";
-import { getServerData } from "@/serverActions/cookie";
+import { getServerData } from "@/serverActions/tools";
 import { logoutAction } from "@/serverActions/auth";
 
 const BtnAuth = async () => {

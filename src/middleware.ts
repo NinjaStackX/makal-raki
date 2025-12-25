@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { decrypt } from "./lib/crypto";
 import { pr } from "./lib/pr";
+import { getServerData } from "./serverActions/tools";
 
 // --- إعدادات التشفير السريع (Web Crypto API) ---
 export async function middleware(request: NextRequest) {
@@ -13,8 +14,8 @@ export async function middleware(request: NextRequest) {
   const decryptedData = await decrypt(reqCook);
   const state = JSON.parse(decryptedData);
 
-  const session = state.session;
-  const userRole = state.userRole;
+  const session = state?.session;
+  const userRole = state?.userRole;
   const { pathname } = request.nextUrl;
   pr("==================================");
   // 2. إذا حاول المستخدم الدخول لصفحات المحمية وهو ليس مسجل دخول

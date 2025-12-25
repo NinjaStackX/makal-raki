@@ -31,6 +31,8 @@ import { deleteComment } from "@/serverActions/comments";
 import { FormArticle } from "./Forms";
 import useDialog from "@/hooks/useDialog";
 import { pr } from "@/lib/pr";
+import { searchServerAction } from "@/serverActions/tools";
+import FramDialog from "@/components/UI/FramDialog";
 
 export default function UserDataExplorer({
   users,
@@ -325,18 +327,34 @@ function Stat({ label, count, color }: any) {
 }
 
 export const ActionsBar = ({ Dialog }: any) => {
+  const searchDialog = useDialog({ type: "" });
+  async function handleSearch(e: any) {
+    const items = await searchServerAction(e);
+    searchDialog.setItem(items);
+  }
   return (
     <div className="w-full  mx-auto my-6">
+      {searchDialog.open && (
+        <SearchResultsDialog
+          data={searchDialog.item}
+          onClose={searchDialog.toggleDialog}
+        />
+      )}
       {/* Container الأساسي */}
       <div className="bg-white/80 backdrop-blur-xl border border-gray-200 p-4 rounded-2xl shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
         {/* جهة اليمين: البحث */}
         <div className="relative w-full md:w-128">
-          <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-          <input
-            type="text"
-            placeholder="ابحث هنا..."
-            className="w-full pr-10 pl-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-sm"
-          />
+          <form action={handleSearch}>
+            <button type="submit">
+              <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+            </button>
+            <input
+              name="search"
+              type="text"
+              placeholder="ابحث هنا..."
+              className="w-full pr-10 pl-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-sm"
+            />
+          </form>
         </div>
 
         {/* جهة اليسار: الأزرار الاحترافية */}
@@ -363,3 +381,129 @@ export const ActionsBar = ({ Dialog }: any) => {
     </div>
   );
 };
+function SearchResultsDialog({
+  data,
+  onClose,
+}: {
+  data: any;
+  onClose: () => void;
+}) {
+  if (!data) return null;
+
+  return (
+    <FramDialog close={onClose}>
+      <div className="w-full max-w-2xl overflow-hidden rounded-3xl bg-white shadow-2xl border border-blue-50">
+        {/* Header */}
+        <div className="bg-blue-600 px-6 py-5 text-white flex items-center justify-between">
+          <div>
+            <h3 className="text-xl font-bold">نتائج البحث المتقدمة</h3>
+            <p className="text-blue-100 text-xs">
+              عثرنا على {data.users?.length || 0} مستخدم و{" "}
+              {data.articles?.length || 0} مقال
+            </p>
+          </div>
+          <button
+            onClick={onClose}
+            className="rounded-full bg-white/20 p-2 hover:bg-white/30 transition-colors"
+          >
+            <svg
+              className="w-5 h-5 text-white"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+
+        {/* Content Area */}
+        <div className="p-6 max-h-[70vh] overflow-y-auto bg-white">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* قسم المستخدمين */}
+            <div className="space-y-4">
+              <h4 className="text-blue-600 font-bold text-sm border-b border-blue-50 pb-2 flex items-center gap-2">
+                <span className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></span>
+                المستخدمين
+              </h4>
+              {data.users?.length > 0 ? (
+                data.users.map((user: any) => (
+                  <div
+                    key={user.id}
+                    className="flex items-center gap-3 p-3 rounded-2xl border border-zinc-50 hover:bg-blue-50/50 transition-all"
+                  >
+                    <div className="h-10 w-10 flex shrink-0 items-center justify-center rounded-xl bg-blue-600 text-white font-bold text-sm">
+                      {user.name[0]}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="font-bold text-zinc-900 text-sm truncate">
+                        {user.name}
+                      </p>
+                      <p className="text-[10px] text-zinc-500 truncate">
+                        {user.email}
+                      </p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="text-xs text-zinc-400 italic">
+                  لا يوجد مستخدمين..
+                </p>
+              )}
+            </div>
+
+            {/* قسم المقالات */}
+            <div className="space-y-4">
+              <h4 className="text-blue-600 font-bold text-sm border-b border-blue-50 pb-2 flex items-center gap-2">
+                <span className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></span>
+                المقالات
+              </h4>
+              {data.articles?.length > 0 ? (
+                data.articles.map((article: any) => (
+                  <div
+                    key={article.id}
+                    className="group p-3 rounded-2xl border border-zinc-50 hover:border-blue-200 transition-all cursor-pointer"
+                  >
+                    <div className="flex justify-between items-start mb-1">
+                      <h5 className="font-bold text-zinc-900 text-sm line-clamp-1 group-hover:text-blue-600">
+                        {article.title}
+                      </h5>
+                      <span className="text-[9px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-md font-bold">
+                        ARTICLE
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-zinc-500 line-clamp-2 leading-relaxed">
+                      {article.body || "لا يوجد محتوى متاح لهذا المقال.."}
+                    </p>
+                    {article.author && (
+                      <p className="text-[9px] mt-2 text-zinc-400 italic">
+                        بواسطة: {article.author.name}
+                      </p>
+                    )}
+                  </div>
+                ))
+              ) : (
+                <p className="text-xs text-zinc-400 italic">لا يوجد مقالات..</p>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="bg-zinc-50/50 px-6 py-4">
+          <button
+            onClick={onClose}
+            className="w-full rounded-2xl bg-blue-600 py-3 text-sm font-bold text-white hover:bg-blue-700 shadow-lg shadow-blue-100 transition-all active:scale-[0.98]"
+          >
+            إغلاق النتائج
+          </button>
+        </div>
+      </div>
+    </FramDialog>
+  );
+}

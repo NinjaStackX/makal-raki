@@ -7,6 +7,7 @@ import { pr } from "@/lib/pr";
 
 export default async function Page({
   params,
+  comments,
 }: {
   params: Promise<{ _id: string }>;
 }) {
@@ -16,6 +17,7 @@ export default async function Page({
   return (
     <div className="fix-height flex items-center justify-center p-4">
       <ArticleContent article={article} />
+      {comments}
     </div>
   );
 }
