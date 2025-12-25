@@ -1,12 +1,13 @@
 import { cookies } from "next/headers";
 import Link from "next/link";
 import React from "react";
-import LogoutButton from "./LogutButton";
-import { Contact2Icon, PersonStandingIcon } from "lucide-react";
+
+import { Contact2Icon, LogOut, PersonStandingIcon } from "lucide-react";
+import { getServerData } from "@/serverActions/cookie";
+import { logoutAction } from "@/serverActions/auth";
 
 const BtnAuth = async () => {
-  const cookieStore = await cookies();
-  const session = cookieStore.get("session")?.value;
+  const session = (await getServerData())?.session;
 
   return (
     <div className="flex items-center gap-3">
@@ -18,8 +19,14 @@ const BtnAuth = async () => {
           >
             <Contact2Icon />
           </Link>
-          {/* زر تسجيل الخروج يحتاج أن يكون Client Component */}
-          <LogoutButton />
+          <form action={logoutAction}>
+            <button
+              type="submit"
+              className="bg-red-500 hover:bg-red-600 text-white font-bold p-2.5 rounded-2xl transition-colors"
+            >
+              <LogOut />
+            </button>
+          </form>
         </>
       ) : (
         <Link

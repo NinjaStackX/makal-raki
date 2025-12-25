@@ -1,16 +1,22 @@
-import { pr } from "@/lib/pr";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { decrypt } from "./lib/crypto";
+import { pr } from "./lib/pr";
 
-export function middleware(request: NextRequest) {
-  // 1. جلب الكوكي (نفترض أن اسمه 'session')
-  const session = request.cookies.get("session")?.value;
+// --- إعدادات التشفير السريع (Web Crypto API) ---
+export async function middleware(request: NextRequest) {
+  const reqCook = request.cookies.get("state")?.value;
 
-  // نفترض أنك تخزن الـ Role في كوكي منفصل أو داخل التوكن
-  const userRole = request.cookies.get("userRole")?.value;
+  if (!reqCook) return NextResponse.next();
 
+  // فك التشفير (يجب استخدام await)
+  const decryptedData = await decrypt(reqCook);
+  const state = JSON.parse(decryptedData);
+
+  const session = state.session;
+  const userRole = state.userRole;
   const { pathname } = request.nextUrl;
-
+  pr("==================================");
   // 2. إذا حاول المستخدم الدخول لصفحات المحمية وهو ليس مسجل دخول
   if (
     !session &&
@@ -21,7 +27,6 @@ export function middleware(request: NextRequest) {
 
   //   // 3. حماية مسارات الأدمن (Admin Only)
   if (pathname.startsWith("/admin") && userRole !== "ADMIN") {
-    pr("hiiiiiiiiii");
     return NextResponse.redirect(new URL("/", request.url));
   }
 

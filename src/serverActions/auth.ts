@@ -5,6 +5,7 @@ import { hash, compare } from "bcryptjs";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import { encrypt } from "@/lib/crypto";
 
 export async function registerAction(formData: FormData) {
   const name = formData.get("name") as string;
@@ -22,14 +23,9 @@ export async function registerAction(formData: FormData) {
       data: { name, email, password: hashedPassword },
     });
 
-    cookieStore.set("session", user.id.toString(), {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 60 * 60 * 24 * 7,
-      path: "/",
-    });
-
-    cookieStore.set("userRole", user.role, {
+    const payloady = JSON.stringify({ session: user.id, userRole: user.role });
+    const payload = await encrypt(payloady);
+    cookieStore.set("state", payload, {
       httpOnly: true,
       secure: false,
       maxAge: 60 * 60 * 24 * 7,
@@ -54,28 +50,20 @@ export async function loginAction(formData: FormData) {
 
   const cookieStore = await cookies();
 
-  cookieStore.set("session", user.id.toString(), {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    maxAge: 60 * 60 * 24 * 7,
-    path: "/",
-  });
-
-  cookieStore.set("userRole", user.role, {
+  const payloady = JSON.stringify({ session: user.id, userRole: user.role });
+  const payload = await encrypt(payloady);
+  cookieStore.set("state", payload, {
     httpOnly: true,
     secure: false,
     maxAge: 60 * 60 * 24 * 7,
     path: "/",
   });
-
-  // pr("========================>>>>>>>>><<<<<<<,");
   redirect("/");
-  // return { success: true, user };
 }
 
 export async function logoutAction() {
   const cookieStore = await cookies();
-  cookieStore.delete("session");
-  cookieStore.delete("userRole");
+
+  cookieStore.delete("state");
   redirect("/");
 }
