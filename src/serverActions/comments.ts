@@ -59,3 +59,21 @@ export const fetchCommentsByArticleId = async (articleId: string) => {
     return [];
   }
 };
+
+export async function addCommentAction(formData: FormData) {
+  const content = formData.get("content") as string;
+  const articleId = formData.get("articleId") as string;
+
+  if (!content) return;
+
+  await prisma.comment.create({
+    data: {
+      content: content,
+      articleId: parseInt(articleId),
+      userId: 11, // القيمة الثابتة التي طلبتها
+    },
+  });
+
+  // هذا السطر هو السحر الذي يحدث الـ @comments بدون تحديث الصفحة كاملة
+  revalidatePath(`/article/${articleId}`);
+}

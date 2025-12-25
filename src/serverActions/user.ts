@@ -14,6 +14,28 @@ export type CreateUserDTO = {
   password: string;
   role?: Role;
 };
+export async function getUserById(id: number | string) {
+  pr({ id });
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: typeof id === "string" ? parseInt(id) : id,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+      },
+    });
+
+    if (!user) return null;
+    return user;
+  } catch (error) {
+    console.error("Error fetching user by ID:", error);
+    return null;
+  }
+}
 
 export async function fetchUsers(): Promise<User[]> {
   const users = await prisma.user.findMany({

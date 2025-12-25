@@ -2,19 +2,26 @@
 
 import { fetchCommentsByArticleId } from "@/serverActions/comments";
 import React from "react";
+import CommentForm from "./components/CommentForm";
+import { getServerData } from "@/serverActions/tools";
+import { getUserById } from "@/serverActions/user";
+import { pr } from "@/lib/pr";
 
 export default async function CommentsPage({
   params,
 }: {
   params: Promise<{ _id: string }>;
 }) {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   const { _id } = await params;
   const comments = await fetchCommentsByArticleId(_id);
-
+  const userId = await getServerData();
+  const user = await getUserById(Number(userId.session));
   return (
     <div className="flex flex-col gap-4">
+      <CommentForm articleId={_id} user={user} />
       {/* Header الصغير */}
+
       <div className="flex items-center justify-between px-1">
         <h3 className="text-zinc-900 font-black text-sm tracking-tight uppercase">
           التعليقات <span className="text-blue-600">({comments.length})</span>
