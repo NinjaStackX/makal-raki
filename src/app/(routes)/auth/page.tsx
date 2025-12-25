@@ -1,13 +1,10 @@
-// import { loginAction, registerAction } from "@/actions/users";
 import React from "react";
 
 import "./styles.css";
-import { useAuth } from "@/hooks/useAuth";
-import { redirect } from "next/navigation";
 
-const page = async () => {
-  const { user } = await useAuth();
-  if (user) redirect("/dashboard");
+import { loginAction, registerAction } from "@/serverActions/auth";
+
+const page = () => {
   return (
     <div className="fix-height flex flex-col items-center justify-center">
       <div className="wrapper">
@@ -19,7 +16,7 @@ const page = async () => {
             <div className="flip-card__inner">
               <div className="flip-card__front">
                 <div className="title">Log in</div>
-                {/* <form action={loginAction}>
+                <form action={loginAction}>
                   <input
                     className="flip-card__input"
                     name="email"
@@ -35,11 +32,11 @@ const page = async () => {
                   <button type="submit" className="flip-card__btn">
                     Let`s go!
                   </button>
-                </form> */}
+                </form>
               </div>
               <div className="flip-card__back">
                 <div className="title">Sign up</div>
-                {/* <form className="flip-card__form" action={registerAction}>
+                <form className="flip-card__form" action={registerAction}>
                   <input
                     className="flip-card__input"
                     placeholder="Name"
@@ -59,7 +56,7 @@ const page = async () => {
                     type="password"
                   />
                   <button className="flip-card__btn">Confirm!</button>
-                </form> */}
+                </form>
               </div>
             </div>
           </label>
