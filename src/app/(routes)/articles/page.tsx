@@ -1,10 +1,10 @@
 import React from "react";
-import type { Article } from "@/utils/types";
-import { fetchArticles } from "@/actions/articles";
+
 import ArticleItem from "./articleItem";
+import { fetchArticles } from "@/serverActions/article";
 
 const Page = async () => {
-  const articles: Article[] = await fetchArticles();
+  const articles = await fetchArticles();
 
   return (
     <section className="m-5">

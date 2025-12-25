@@ -694,7 +694,8 @@ export type ArticleScalarFieldEnum = (typeof ArticleScalarFieldEnum)[keyof typeo
 export const CommentScalarFieldEnum = {
   id: 'id',
   content: 'content',
-  articleId: 'articleId'
+  articleId: 'articleId',
+  userId: 'userId'
 } as const
 
 export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]

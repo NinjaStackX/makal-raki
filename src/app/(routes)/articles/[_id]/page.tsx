@@ -1,8 +1,9 @@
 import React from "react";
 import "./styles.css";
-import ArticleContent from "./ArticleContent";
-import ArticleMeta from "./ArticleMeta";
-import { getArticleById, getAuthorNameByUserId } from "@/actions/articles";
+import ArticleContent from "./ArticleCard";
+
+import { getArticleById } from "@/serverActions/article";
+import { pr } from "@/lib/pr";
 
 export default async function Page({
   params,
@@ -11,16 +12,10 @@ export default async function Page({
 }) {
   const { _id } = await params;
   const article = await getArticleById(_id);
-  const author = await getAuthorNameByUserId(article?.authorId);
-  const title = article?.title || "Default Title";
-  const body = article?.body || "Default body content.";
-  const publishedAt = new Date().toLocaleDateString();
+  pr(article);
   return (
     <div className="fix-height flex items-center justify-center p-4">
-      <div>
-        <ArticleContent title={title} body={body} />
-        <ArticleMeta author={author || "..."} publishedAt={publishedAt} />
-      </div>
+      <ArticleContent article={article} />
     </div>
   );
 }
