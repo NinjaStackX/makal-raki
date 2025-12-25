@@ -35,3 +35,27 @@ export async function deleteComment(id: number) {
   await prisma.comment.delete({ where: { id } });
   revalidatePath("/");
 }
+export const fetchCommentsByArticleId = async (articleId: string) => {
+  try {
+    const comments = await prisma.comment.findMany({
+      where: {
+        articleId: parseInt(articleId), // تأكد من تحويل النوع حسب قاعدة بياناتك
+      },
+      include: {
+        user: {
+          // جلب بيانات المستخدم صاحب التعليق
+          select: {
+            name: true,
+          },
+        },
+      },
+      orderBy: {
+        id: "desc", // عرض الأحدث أولاً
+      },
+    });
+    return comments;
+  } catch (error) {
+    console.error("Error fetching comments:", error);
+    return [];
+  }
+};

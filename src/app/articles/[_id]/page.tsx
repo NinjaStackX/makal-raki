@@ -1,23 +1,20 @@
-import React from "react";
-import "./styles.css";
+// app/article/[_id]/page.tsx
 import ArticleContent from "./ArticleCard";
-
 import { getArticleById } from "@/serverActions/article";
-import { pr } from "@/lib/pr";
 
 export default async function Page({
   params,
-  comments,
 }: {
   params: Promise<{ _id: string }>;
 }) {
   const { _id } = await params;
   const article = await getArticleById(_id);
-  pr(article);
+
+  if (!article) return <div className="text-center p-10">المقال غير موجود</div>;
+
   return (
-    <div className="fix-height flex items-center justify-center p-4">
+    <div className="flex flex-col gap-6">
       <ArticleContent article={article} />
-      {comments}
     </div>
   );
 }

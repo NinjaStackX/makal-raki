@@ -1,43 +1,39 @@
 "use client";
-import React from "react";
 import { motion } from "motion/react";
 
-const ArticleContent = ({ article }: any) => {
+export default function ArticleContent({ article }: any) {
   const { title, body, author, createdAt } = article;
+
   return (
-    <div>
-      <motion.article
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.25 }}
-        className="article-card w-[75vw] h-[40vh] p-6"
-      >
-        <h2 className="title">{title}</h2>
-        {body && <p className="body">{body}</p>}
-      </motion.article>
+    <motion.article
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="bg-white rounded-3xl p-8 border border-zinc-200 shadow-sm"
+    >
+      <h1 className="text-4xl font-black text-zinc-900 mb-6 leading-tight">
+        {title}
+      </h1>
 
-      <motion.div
-        className="meta"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3, duration: 0.6 }}
-      >
-        <motion.div key={`${author}-${createdAt}`}>
-          <span className="author">By </span>
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.25 }}
-            exit={{ opacity: 0 }}
-          >
-            {author.name || "..."}
-          </motion.span>
-        </motion.div>
+      <div className="flex items-center gap-4 mb-8 pb-6 border-b border-zinc-100">
+        <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white font-bold text-xl uppercase">
+          {author?.name?.[0] || "A"}
+        </div>
+        <div>
+          <p className="text-zinc-900 font-bold tracking-tight">
+            <span className="text-zinc-400 font-normal">By </span>
+            {author?.name || "Anonymous"}
+          </p>
+          <p className="text-zinc-400 text-xs">
+            {new Date(createdAt).toLocaleDateString("ar-EG", {
+              dateStyle: "long",
+            })}
+          </p>
+        </div>
+      </div>
 
-        <span className="date">{JSON.stringify(createdAt)}</span>
-      </motion.div>
-    </div>
+      <div className="prose prose-zinc max-w-none text-zinc-600 leading-relaxed text-lg">
+        {body || "لا يوجد محتوى لهذا المقال حالياً."}
+      </div>
+    </motion.article>
   );
-};
-
-export default ArticleContent;
+}
