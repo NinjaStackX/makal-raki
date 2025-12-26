@@ -1,20 +1,13 @@
-import Link from "next/link";
-import styles from "./header.module.css";
-import Navbar from "./Navbar";
-import BtnAuth from "./BtnAuth";
 import { getServerData } from "@/serverActions/tools";
+import Navbar from "./Navbar";
 
 const Header = async () => {
-  const user = await getServerData();
+  // جلب بيانات المستخدم والسشن من السيرفر
+  const data = await getServerData();
+  const session = data?.session;
+  const isAdmin = data?.userRole === "ADMIN";
 
-  return (
-    <header className={styles.header}>
-      <Navbar isAdmin={user?.userRole === "ADMIN"} />
-      <div className={styles.right}>
-        <BtnAuth />
-      </div>
-    </header>
-  );
+  return <Navbar session={session} isAdmin={isAdmin} />;
 };
 
 export default Header;

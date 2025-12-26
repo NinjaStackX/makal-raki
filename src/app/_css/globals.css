@@ -1,19 +1,22 @@
 @import "tailwindcss";
-/* @import "tailwindcss/preflight";
-
-@tailwind utilities; */
 
 :root {
-  --bg--color: rgb(239, 239, 239);
+  /* خلفية رمادية فاتحة جداً مريحة للعين */
+  --bg--color: #fcfcfd;
 }
 
 body {
   background-color: var(--bg--color);
+  /* اختيار خط عربي مناسب إذا كان متوفر (مثل Cairo أو Tajawal) */
+  font-family: "Tajawal", sans-serif;
+  color: #18181b; /* zinc-900 */
 }
+
+/* تأثيرات عامة للأنيميشن */
+.animate-soft {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .fix-height {
-  min-height: calc(100vh - 150px);
-}
-.ccenter {
-  display: flex;
-  justify-content: center;
+  min-height: calc(100vh - 80px);
 }

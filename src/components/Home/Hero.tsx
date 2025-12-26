@@ -1,6 +1,7 @@
+import { PenTool } from "lucide-react";
 import Image from "next/image";
 import type { ReactNode } from "react";
-import CloudImage from "@/../public/cloud.png"; // عدّل المسار حسب مشروعك
+// import CloudImage from "@/../public/pen.png"; // عدّل المسار حسب مشروعك
 
 type Props = {
   title: string | ReactNode;
@@ -12,7 +13,7 @@ type Props = {
 export default function HeroSection({
   title,
   children,
-  imageAlt = "Cloud illustration",
+
   imagePriority = false,
 }: Props) {
   return (
@@ -27,16 +28,9 @@ export default function HeroSection({
       </div>
 
       <div className="w-full lg:w-1/2 flex justify-center">
-        <div className="relative w-72 h-72 sm:w-96 sm:h-96">
-          <Image
-            src={CloudImage}
-            alt={imageAlt}
-            fill={false}
-            width={500}
-            height={500}
-            priority={imagePriority}
-            className="object-contain"
-          />
+        <div className="relative flex justify-center items-center w-72 h-72 sm:w-96 sm:h-96">
+          {" "}
+          <PenTool size={180} />
         </div>
       </div>
     </section>

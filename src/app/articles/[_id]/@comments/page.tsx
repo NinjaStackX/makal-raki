@@ -16,7 +16,8 @@ export default async function CommentsPage({
   const { _id } = await params;
   const comments = await fetchCommentsByArticleId(_id);
   const userId = await getServerData();
-  const user = await getUserById(Number(userId.session));
+  pr({ userId });
+  const user = userId ? await getUserById(Number(userId?.session)) : null;
   return (
     <div className="flex flex-col gap-4">
       <CommentForm articleId={_id} user={user} />
