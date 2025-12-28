@@ -21,7 +21,7 @@ const ArticleSideBar = ({
         >
           <ArticleItem
             article={a}
-            userId={Number(a.authorId)}
+            userId={String(a.authorId)}
             showAuthor={true}
             author={a.author.name}
             edit={UpdateArticleDialog.setItem}
