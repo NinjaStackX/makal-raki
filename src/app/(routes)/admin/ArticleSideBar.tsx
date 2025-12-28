@@ -24,8 +24,8 @@ const ArticleSideBar = ({
             userId={String(a.authorId)}
             showAuthor={true}
             author={a.author.name}
-            edit={UpdateArticleDialog.setItem}
-            handleClose={UpdateArticleDialog.toggleDialog}
+            edit={UpdateArticleDialog?.setItem}
+            handleClose={UpdateArticleDialog?.toggleDialog}
           />
         </section>
       ))}

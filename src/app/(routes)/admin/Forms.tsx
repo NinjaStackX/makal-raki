@@ -4,14 +4,13 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 
 interface Form {
-  action: () => { ok: boolean };
+  action: unknown;
   handleClose: () => void;
-  user?: User;
-  article?: Article;
+  user?: User | unknown;
+  article?: Article | unknown;
 }
 
 export function FormArticle({ action, article, handleClose }: Form) {
-  pr(article);
   const [loading, setLoading] = useState(false);
   const articleId = article?.id;
   const authorId = article?.authorId;
@@ -19,7 +18,7 @@ export function FormArticle({ action, article, handleClose }: Form) {
   function handleAction(e: React.FormEvent<HTMLFormElement>) {
     async function handleSubmit() {
       setLoading(true);
-      pr(e);
+
       try {
         await new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -91,7 +90,6 @@ export function FormArticle({ action, article, handleClose }: Form) {
 
 export function FormUser({ action, handleClose, user }: Form) {
   const [loading, setLoading] = useState<boolean>(false);
-  pr(user);
 
   const userId = user?.id;
   const titDialog = userId ? "تعديل بيانات لمستخدم" : "انشاء  مستخدم جديد";
@@ -102,7 +100,6 @@ export function FormUser({ action, handleClose, user }: Form) {
   function handleAction(e: React.FormEvent<HTMLFormElement>) {
     async function handleSubmit() {
       setLoading(true);
-      pr(e);
       try {
         await new Promise((resolve) => setTimeout(resolve, 500));
 

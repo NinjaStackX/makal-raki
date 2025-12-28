@@ -32,8 +32,9 @@ export type Err = {
 };
 type Dialog = {
   open: boolean;
-  setOpen: () => void;
+  setOpen: (v: boolean) => void;
   toggleDialog: () => void;
-  item: Article | User | null;
-  setItem: () => void;
+  item: Article | User | null | undefined | unknown;
+  // استبدل any بنفس الأنواع المسموحة في item
+  setItem?: (v?: unknown) => void;
 };

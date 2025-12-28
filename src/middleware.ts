@@ -16,7 +16,7 @@ export async function middleware(request: NextRequest) {
   const session = state?.session;
   const userRole = state?.userRole;
   const { pathname } = request.nextUrl;
-  pr("==================================");
+
   // 2. إذا حاول المستخدم الدخول لصفحات المحمية وهو ليس مسجل دخول
   if (
     !session &&

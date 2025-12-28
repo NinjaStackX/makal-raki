@@ -102,8 +102,6 @@ export async function updateArticleAction(formData: FormData) {
   revalidatePath("/profile"); // تحديث صفحة البروفايل فوراً
 }
 export async function getArticleById(idd: string | number) {
-  pr({ idd });
-  // 1. التأكد من وجود قيمة
   if (!idd) return null;
 
   // 2. تحويلها لرقم بأمان

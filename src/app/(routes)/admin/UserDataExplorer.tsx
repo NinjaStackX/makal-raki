@@ -32,7 +32,7 @@ interface UserDataExplorerProps {
   users: User[] | null;
   UpdateArticleDialog: Dialog;
   CreateArticleDialog: Dialog;
-  UpdateUserDialog: Dialog;
+  UpdateUserDialog: Dialog | unknown;
 }
 
 export default function UserDataExplorer({
@@ -88,12 +88,10 @@ function UserCard({
     }
   };
   const handleAddArticle = () => {
-    pr(user.id);
     CreateArticleDialog.setItem({ authorId: user.id });
     CreateArticleDialog.setOpen(true);
   };
   const handleUpdateUser = () => {
-    pr(user.id);
     UpdateUserDialog.setItem({ id: user.id });
   };
 
@@ -223,6 +221,7 @@ interface ArticleItemProps {
   showAuthor?: boolean;
   author?: string;
   edit?: () => void;
+  handleClose?: () => void;
 }
 
 // 2. تطبيق النوع ووضع القيم الافتراضية أثناء فك الكائن (Destructuring)
