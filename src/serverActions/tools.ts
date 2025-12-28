@@ -2,7 +2,6 @@
 import { cookies } from "next/headers";
 import { decrypt } from "@/lib/crypto";
 import { prisma } from "@/lib/prisma";
-import { pr } from "@/lib/pr";
 
 export async function getServerData() {
   try {
@@ -18,7 +17,9 @@ export async function getServerData() {
     return null;
   }
 }
-export async function searchServerAction(formData: any) {
+export async function searchServerAction(
+  formData: React.FormEvent<HTMLFormElement>
+) {
   const query = formData.get("search");
 
   if (!query || query.trim() === "") return { users: [], articles: [] };

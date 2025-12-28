@@ -1,4 +1,3 @@
-import { getUserById } from "@/serverActions/user";
 import { prisma } from "@/lib/prisma";
 import { getServerData } from "@/serverActions/tools";
 import ArticleActions from "./ArticleActions";

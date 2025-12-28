@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bounce, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "./_css/globals.css";
 import Header from "@/components/header/Header";
 import Footer from "../components/Footer";

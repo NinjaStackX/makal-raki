@@ -1,19 +1,25 @@
 "use client";
-import { pr } from "@/lib/pr";
-import React, { useEffect, useLayoutEffect, useState } from "react";
 
-export default function useDialog({ typ }: any) {
-  const [open, setOpen] = useState(false);
-  const [item, setItem] = useState();
-  function toggleDialog() {
+import { Article, User } from "@/utils/types";
+import { useEffect, useState } from "react";
+
+export default function useDialog<T extends { typ: string }>({ typ }: T) {
+  const [open, setOpen] = useState<boolean>(false);
+  const [item, setItem] = useState<null | User | Article>();
+  function toggleDialog(): void {
     if (item) {
       setOpen((p) => !p);
       if (open == true && typ != "create") setItem(null);
     }
   }
   useEffect(() => {
-    if (item && typ != "create") toggleDialog();
+    let isMounted = true;
+    if (isMounted && item && typ != "create") toggleDialog();
+    return () => {
+      isMounted = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item]);
-  // useEffect(()=>{},[setOpen])
+
   return { open, setOpen, toggleDialog, item, setItem };
 }

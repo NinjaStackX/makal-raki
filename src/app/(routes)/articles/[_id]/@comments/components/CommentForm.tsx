@@ -4,13 +4,14 @@ import { addCommentAction } from "@/serverActions/comments";
 import { SubmitButton } from "./SubmitButton";
 
 import Link from "next/link";
+import { User } from "@/utils/types";
 
 export default function CommentForm({
   articleId,
   user,
 }: {
   articleId: string;
-  user: any;
+  user: User;
 }) {
   const formRef = useRef<HTMLFormElement>(null);
 

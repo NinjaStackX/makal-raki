@@ -49,7 +49,6 @@ export async function createArticle(formData: FormData): Promise<void> {
     },
   });
   revalidatePath("");
-  return { ok: true };
 }
 
 export async function updateArticle(formData: FormData) {

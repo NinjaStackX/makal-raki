@@ -4,7 +4,7 @@ import {
   Twitter,
   Github,
   Linkedin,
-  Mail,
+
   ArrowUpRight,
 } from "lucide-react";
 

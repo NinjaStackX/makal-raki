@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { decrypt } from "./lib/crypto";
 import { pr } from "./lib/pr";
-import { getServerData } from "./serverActions/tools";
 
 // --- إعدادات التشفير السريع (Web Crypto API) ---
 export async function middleware(request: NextRequest) {

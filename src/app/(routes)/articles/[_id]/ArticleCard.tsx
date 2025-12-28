@@ -1,7 +1,8 @@
 "use client";
+import { Article } from "@/utils/types";
 import { motion } from "motion/react";
 
-export default function ArticleContent({ article }: any) {
+export default function ArticleContent({ article }: { article: Article }) {
   const { title, body, author, createdAt } = article;
 
   return (

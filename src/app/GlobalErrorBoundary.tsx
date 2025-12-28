@@ -2,13 +2,17 @@
 "use client";
 
 import { showError } from "@/lib/error";
+
 import { Component, ReactNode } from "react";
 
+interface Props {
+  children: ReactNode;
+}
 export class GlobalErrorBoundary extends Component<
   { children: ReactNode },
   { hasError: boolean }
 > {
-  constructor(props: any) {
+  constructor(props: Props) {
     super(props);
     this.state = { hasError: false };
   }
@@ -17,7 +21,7 @@ export class GlobalErrorBoundary extends Component<
     return { hasError: true };
   }
 
-  componentDidCatch(error: any) {
+  componentDidCatch(error: Error) {
     showError(error);
   }
 

@@ -1,14 +1,22 @@
 import { pr } from "@/lib/pr";
+import { Article, User } from "@/utils/types";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-export function FormArticle({ action, article = {}, handleClose }: any) {
+interface Form {
+  action: () => { ok: boolean };
+  handleClose: () => void;
+  user?: User;
+  article?: Article;
+}
+
+export function FormArticle({ action, article, handleClose }: Form) {
   pr(article);
   const [loading, setLoading] = useState(false);
   const articleId = article?.id;
   const authorId = article?.authorId;
   const titDialog = articleId ? "تعديل مقال" : "انشاء مقال";
-  function handleAction(e: any) {
+  function handleAction(e: React.FormEvent<HTMLFormElement>) {
     async function handleSubmit() {
       setLoading(true);
       pr(e);
@@ -39,7 +47,7 @@ export function FormArticle({ action, article = {}, handleClose }: any) {
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
             placeholder="أدخل عنوان المقال"
             name="title"
-            defaultValue={article.title}
+            defaultValue={article?.title}
           ></input>
         </div>
 
@@ -52,7 +60,7 @@ export function FormArticle({ action, article = {}, handleClose }: any) {
             placeholder="اكتب محتوى المقال هنا..."
             name="body"
             rows={4}
-            defaultValue={article.body}
+            defaultValue={article?.body}
           ></textarea>
         </div>
 
@@ -73,16 +81,16 @@ export function FormArticle({ action, article = {}, handleClose }: any) {
           className="mt-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200"
         >
           {loading && "Loading......."}
-          {!loading && !article.id && " إنشاء المقال"}
-          {!loading && article.id && " تعديل المقال"}
+          {!loading && !article?.id && " إنشاء المقال"}
+          {!loading && article?.id && " تعديل المقال"}
         </button>
       </form>
     </div>
   );
 }
 
-export function FormUser({ action, handleClose, user }: any) {
-  const [loading, setLoading] = useState(false);
+export function FormUser({ action, handleClose, user }: Form) {
+  const [loading, setLoading] = useState<boolean>(false);
   pr(user);
 
   const userId = user?.id;
@@ -91,7 +99,7 @@ export function FormUser({ action, handleClose, user }: any) {
     ? "  ملاحظة: انرك الحقل فارغ اذا لم تكن ترغب تعديله"
     : "قم بملء البيانات ";
 
-  function handleAction(e: any) {
+  function handleAction(e: React.FormEvent<HTMLFormElement>) {
     async function handleSubmit() {
       setLoading(true);
       pr(e);

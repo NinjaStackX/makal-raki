@@ -1,14 +1,19 @@
 "use client";
 import React from "react";
 import { ArticleItem } from "./UserDataExplorer";
-import useDialog from "@/hooks/useDialog";
-import { FormArticle } from "./Forms";
-import { createArticle } from "@/serverActions/article";
+import { Article, Dialog } from "@/utils/types";
 
-const ArticleSideBar = ({ articles, UpdateArticleDialog }: any) => {
+interface ArticleSideBarProps {
+  articles: Article[];
+  UpdateArticleDialog: Dialog;
+}
+const ArticleSideBar = ({
+  articles,
+  UpdateArticleDialog,
+}: ArticleSideBarProps) => {
   return (
     <div className="flex flex-row overflow-x-auto lg:flex-col lg:overflow-visible gap-4 p-4">
-      {articles.map((a: any) => (
+      {articles.map((a) => (
         <section
           key={a.id}
           className="bg-white p-2 rounded-2xl shadow-sm border border-gray-100 

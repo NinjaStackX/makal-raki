@@ -4,7 +4,7 @@ import {
   getArticleById,
   updateArticleAction,
 } from "@/serverActions/article";
-import { Suspense, use, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
 
 export default function ArticleActions({ id }: { id: number }) {
@@ -104,19 +104,27 @@ function EditFormContent({
   articleId,
   onClose,
 }: {
-  articleId: any;
+  articleId: number;
   onClose: () => void;
 }) {
   // جلب البيانات مباشرة داخل الكومبوننت
   const [article, setArticle] = useState({});
   useEffect(() => {
-    async function fetch() {
-      const art = await getArticleById(Number(articleId));
-      setArticle(art);
-    }
-    fetch();
-  }, []);
+    let isMounted = true;
 
+    async function fetchArticle() {
+      const art = await getArticleById(Number(articleId));
+      if (isMounted) {
+        setArticle(art);
+      }
+    }
+
+    fetchArticle();
+
+    return () => {
+      isMounted = false;
+    }; // دالة تنظيف
+  }, [articleId]);
   if (!article)
     return <div className="p-8 text-center text-red-500">المقال غير موجود</div>;
 
@@ -170,7 +178,7 @@ function EditArticleModal({
   articleId,
   onClose,
 }: {
-  articleId: any;
+  articleId: number;
   onClose: () => void;
 }) {
   return (

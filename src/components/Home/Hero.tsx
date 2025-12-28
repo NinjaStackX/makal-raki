@@ -1,7 +1,6 @@
 import { PenTool } from "lucide-react";
-import Image from "next/image";
+
 import type { ReactNode } from "react";
-// import CloudImage from "@/../public/pen.png"; // عدّل المسار حسب مشروعك
 
 type Props = {
   title: string | ReactNode;
@@ -10,12 +9,7 @@ type Props = {
   imagePriority?: boolean;
 };
 
-export default function HeroSection({
-  title,
-  children,
-
-  imagePriority = false,
-}: Props) {
+export default function HeroSection({ title, children }: Props) {
   return (
     <section className="m-2.5 flex flex-col-reverse lg:flex-row items-center justify-between gap-8py-12 px-6">
       <div className="w-full lg:w-1/2 flex justify-center">

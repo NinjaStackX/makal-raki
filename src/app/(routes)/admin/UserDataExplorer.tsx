@@ -2,44 +2,45 @@
 import { motion, AnimatePresence } from "motion/react";
 import { useState, useTransition } from "react";
 import {
-  User,
+  User2Icon,
   BookOpen,
-  MessageCircle,
   ChevronDown,
   Mail,
   ShieldCheck,
   Trash2,
   Loader2,
-  X,
-  Edit,
-  PlusCircle,
-  Menu,
-  ArrowRight,
-  LayoutGrid,
   Plus,
   Edit3,
   Search,
-  Download,
 } from "lucide-react";
 
 import { createComment } from "@/serverActions/comments"; // استيراد الأكشن الجديد
 
 // استيراد الأكشنز
-import { createArticle, deleteArticle } from "@/serverActions/article";
+import { deleteArticle } from "@/serverActions/article";
 import { deleteUser } from "@/serverActions/user";
 import { deleteComment } from "@/serverActions/comments";
-import { FormArticle } from "./Forms";
+
 import useDialog from "@/hooks/useDialog";
 import { pr } from "@/lib/pr";
 import { searchServerAction } from "@/serverActions/tools";
 import FramDialog from "@/components/UI/FramDialog";
+import { Article, Comment, Dialog, User } from "@/utils/types";
+
+interface UserDataExplorerProps {
+  index?: number;
+  users: User[] | null;
+  UpdateArticleDialog: Dialog;
+  CreateArticleDialog: Dialog;
+  UpdateUserDialog: Dialog;
+}
 
 export default function UserDataExplorer({
   users,
   UpdateArticleDialog,
   CreateArticleDialog,
   UpdateUserDialog,
-}: any) {
+}: UserDataExplorerProps) {
   return (
     <>
       <div className="mx-auto p-8 bg-gray-50 min-h-screen">
@@ -53,7 +54,7 @@ export default function UserDataExplorer({
         </header>
 
         <div className="grid gap-6">
-          {users.map((user: any, index: any) => (
+          {users.map((user, index) => (
             <UserCard
               key={user.id}
               user={user}
@@ -75,7 +76,7 @@ function UserCard({
   UpdateArticleDialog,
   CreateArticleDialog,
   UpdateUserDialog,
-}: any) {
+}: UserDataExplorerProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
 
@@ -116,7 +117,7 @@ function UserCard({
               {isPending ? (
                 <Loader2 className="animate-spin" />
               ) : (
-                <User size={28} />
+                <User2Icon size={28} />
               )}
             </div>
             {user.role === "ADMIN" && (
@@ -193,7 +194,7 @@ function UserCard({
               </h4>
 
               <div className="grid gap-4">
-                {user.articles?.map((article: any, i: any) => (
+                {user.articles?.map((article: Article) => (
                   <ArticleItem
                     key={article.id}
                     article={article}
@@ -216,18 +217,27 @@ function UserCard({
   );
 }
 
+interface ArticleItemProps {
+  article: Article; // يفضل استبدال any بنوع المقال الحقيقي
+  userId: string;
+  showAuthor?: boolean;
+  author?: User;
+  edit?: () => void;
+}
+
+// 2. تطبيق النوع ووضع القيم الافتراضية أثناء فك الكائن (Destructuring)
 export function ArticleItem({
   article,
   userId,
   showAuthor = false,
   author = null,
   edit = () => {},
-}: any) {
+}: ArticleItemProps) {
   // أضفنا userId كـ prop
   const [isDeleting, startTransition] = useTransition();
   const [isAdding, startAdding] = useTransition();
 
-  const handleAddComment = (formData: any) => {
+  const handleAddComment = (formData: ReactDOM.FormStatus<HTMLFormElement>) => {
     startAdding(async () => {
       await createComment(formData);
     });
@@ -285,7 +295,7 @@ export function ArticleItem({
       </form>
       {/* قائمة التعليقات */}
       <div className="space-y-2 border-t border-gray-50 pt-3">
-        {article.comments?.map((comment: any) => (
+        {article.comments?.map((comment: Comment) => (
           <CommentItem key={comment.id} comment={comment} />
         ))}
       </div>
@@ -299,13 +309,14 @@ export function ArticleItem({
 }
 
 // مكون فرعي للتعليق
-function CommentItem({ comment }: any) {
+function CommentItem({ comment }: { comment: Comment }) {
   const [isDeleting, startTransition] = useTransition();
 
   return (
     <div className="flex justify-between items-center bg-gray-50 p-2 rounded-lg group">
-      <p className="text-xs text-gray-700 italic">"{comment.content}"</p>
+      <p className="text-xs text-gray-700 italic">{comment.content}</p>
       <button
+        disabled={isDeleting}
         onClick={() => startTransition(() => deleteComment(comment.id))}
         className="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600 transition-all"
       >
@@ -315,7 +326,15 @@ function CommentItem({ comment }: any) {
   );
 }
 
-function Stat({ label, count, color }: any) {
+function Stat({
+  label,
+  count,
+  color,
+}: {
+  label: string;
+  count: number;
+  color: string;
+}) {
   return (
     <div className="text-center">
       <p className="text-[10px] text-gray-400 uppercase font-bold tracking-wider">
@@ -326,9 +345,9 @@ function Stat({ label, count, color }: any) {
   );
 }
 
-export const ActionsBar = ({ Dialog }: any) => {
+export const ActionsBar = ({ Dialog }: { Dialog: Dialog }) => {
   const searchDialog = useDialog({ type: "" });
-  async function handleSearch(e: any) {
+  async function handleSearch(e: React.FormEvent<HTMLFormElement>) {
     const items = await searchServerAction(e);
     searchDialog.setItem(items);
   }
@@ -385,7 +404,7 @@ function SearchResultsDialog({
   data,
   onClose,
 }: {
-  data: any;
+  data: { users: User[]; articles: Article[] };
   onClose: () => void;
 }) {
   if (!data) return null;
@@ -432,7 +451,7 @@ function SearchResultsDialog({
                 المستخدمين
               </h4>
               {data.users?.length > 0 ? (
-                data.users.map((user: any) => (
+                data.users.map((user) => (
                   <div
                     key={user.id}
                     className="flex items-center gap-3 p-3 rounded-2xl border border-zinc-50 hover:bg-blue-50/50 transition-all"
@@ -464,7 +483,7 @@ function SearchResultsDialog({
                 المقالات
               </h4>
               {data.articles?.length > 0 ? (
-                data.articles.map((article: any) => (
+                data.articles.map((article) => (
                   <div
                     key={article.id}
                     className="group p-3 rounded-2xl border border-zinc-50 hover:border-blue-200 transition-all cursor-pointer"

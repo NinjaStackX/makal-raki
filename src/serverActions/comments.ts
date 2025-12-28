@@ -1,5 +1,5 @@
 "use server";
-import { pr } from "@/lib/pr";
+
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 

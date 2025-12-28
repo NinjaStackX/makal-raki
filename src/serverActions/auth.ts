@@ -31,7 +31,7 @@ export async function registerAction(formData: FormData) {
       maxAge: 60 * 60 * 24 * 7,
       path: "/",
     });
-  } catch (error: any) {
+  } catch (error: Error) {
     if (error.code === "P2002") throw new Error("الإيميل مستخدم");
     throw new Error("خطأ في النظام");
   }

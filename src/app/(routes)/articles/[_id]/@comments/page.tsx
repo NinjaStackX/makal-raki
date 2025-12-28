@@ -52,7 +52,7 @@ export default async function CommentsPage({
               {/* محتوى التعليق */}
               <div className="pl-11">
                 <p className="text-sm text-zinc-600 leading-relaxed italic">
-                  "{comment.content}"
+                  {comment.content}
                 </p>
               </div>
             </div>

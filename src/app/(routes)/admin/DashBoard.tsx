@@ -5,12 +5,18 @@ import UserDataExplorer, { ActionsBar } from "./UserDataExplorer";
 import useDialog from "@/hooks/useDialog";
 import { FormArticle, FormUser } from "./Forms";
 import { createArticle, updateArticle } from "@/serverActions/article";
-import { pr } from "@/lib/pr";
 import FramDialog from "@/components/UI/FramDialog";
 import { createUser, updateUserDetails } from "@/serverActions/user";
+import { Article, User } from "@/utils/types";
 
-const DashBoard = ({ articles, users }: any) => {
-  const UpdateArticleDialog = useDialog({ typ: "update" });
+const DashBoard = ({
+  articles,
+  users,
+}: {
+  articles: Article[];
+  users: User[];
+}) => {
+  const UpdateArticleDialog = useDialog<{ typ: string }>({ typ: "update" });
   const UpdateUserDialog = useDialog({ typ: "update" });
   const CreateArticleDialog = useDialog({ typ: "create" });
   const CreateUserDialog = useDialog({ typ: "create" });

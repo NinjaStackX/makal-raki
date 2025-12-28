@@ -2,7 +2,7 @@
 import Hero from "@/components/Home/Hero";
 import { fetchArticles } from "@/serverActions/article";
 import { PenTool, MessageSquare, Newspaper } from "lucide-react";
-import ArticleItem from "./articles/articleItem";
+import ArticleItem from "./(routes)/articles/articleItem";
 
 const HomePage = async () => {
   const articles = await fetchArticles();

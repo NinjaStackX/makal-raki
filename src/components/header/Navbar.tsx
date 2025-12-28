@@ -90,7 +90,7 @@ import {
 import { logoutAction } from "@/serverActions/auth";
 
 interface NavbarProps {
-  session: any;
+  session: number | null;
   isAdmin: boolean;
 }
 
