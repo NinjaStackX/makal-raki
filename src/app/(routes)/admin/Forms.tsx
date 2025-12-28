@@ -23,8 +23,8 @@ export function FormArticle({ action, article, handleClose }: Form) {
       try {
         await new Promise((resolve) => setTimeout(resolve, 500));
 
-        const status = await action(e);
-        if (status.ok) toast.success("completed article Submition Succeffully");
+        await action(e);
+
         handleClose();
       } catch (error) {
         console.error("خطأ في الإرسال:", error);
