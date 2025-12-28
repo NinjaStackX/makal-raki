@@ -221,7 +221,7 @@ interface ArticleItemProps {
   article: Article; // يفضل استبدال any بنوع المقال الحقيقي
   userId: string;
   showAuthor?: boolean;
-  author?: User;
+  author?: string;
   edit?: () => void;
 }
 
