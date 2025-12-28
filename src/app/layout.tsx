@@ -6,9 +6,11 @@ import Footer from "../components/Footer";
 import { GlobalErrorBoundary } from "./GlobalErrorBoundary";
 
 export const metadata: Metadata = {
-  title: "Hostigre app",
-  description: "buy and sale hosts on web",
+  title: "Makal & Raki app",
+  description: "المنصة العربية الأولى لروي حدود الابداع",
 };
+
+export const dynamic = "force-dynamic";
 
 export default async function RootLayout({
   children,

@@ -6,6 +6,8 @@ import ArticleItem from "./(routes)/articles/articleItem";
 import Pagination from "@/components/Pagination"; // سننشئ هذا المكون بالأسفل
 import { Article } from "@/utils/types";
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage({
   searchParams,
 }: {
