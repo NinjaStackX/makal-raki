@@ -1,7 +1,7 @@
 "use server";
 import { cookies } from "next/headers";
 import { decrypt } from "@/lib/crypto";
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 
 export async function getServerData() {
   try {

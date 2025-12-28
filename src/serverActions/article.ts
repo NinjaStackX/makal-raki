@@ -1,7 +1,8 @@
 "use server";
-import { prisma } from "@/lib/prisma";
+
 import type { Article } from "@/generated/prisma/client";
 import { pr } from "@/lib/pr";
+import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
 // helper `pr` removed — keep imports minimal for server action serialization

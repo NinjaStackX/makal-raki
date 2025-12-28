@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 import { getServerData } from "@/serverActions/tools";
 import ArticleActions from "./ArticleActions";
 

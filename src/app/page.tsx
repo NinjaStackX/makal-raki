@@ -54,8 +54,8 @@ export default async function HomePage({
         {/* عرض المقالات في شبكة (Grid) بدلاً من الصف العرضي */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-1">
           {displayedArticles.map((a) => (
-            <div className="w-[1300px] ">
-              <ArticleItem key={a.id} article={a} />
+            <div key={a.id} className="w-[70vw] m-2">
+              <ArticleItem article={a} />
             </div>
           ))}
         </div>
