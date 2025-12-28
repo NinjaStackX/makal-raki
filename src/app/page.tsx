@@ -8,23 +8,7 @@ import { Article } from "@/utils/types";
 
 export const dynamic = "force-dynamic";
 
-export default async function HomePage({
-  searchParams,
-}: {
-  articles: Article[];
-  searchParams: { page?: string };
-}) {
-  const articles = await fetchArticles();
-  const currentPage = Number(searchParams?.page) || 1;
-  const itemsPerPage = 6; // عدد المقالات في كل صفحة
-
-  // حساب المقالات التي ستظهر في الصفحة الحالية
-  const totalPages = Math.ceil(articles.length / itemsPerPage);
-  const displayedArticles = articles.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-
+export default async function HomePage({}: {}) {
   return (
     <div className="flex flex-col gap-10">
       <Hero title={"مقال ورأي"}>
@@ -45,24 +29,6 @@ export default async function HomePage({
           </div>
         </div>
       </Hero>
-
-      <section className="container mx-auto px-4 py-10">
-        <h2 className="text-2xl font-black text-zinc-900 mb-6">
-          أحدث الأطروحات
-        </h2>
-
-        {/* عرض المقالات في شبكة (Grid) بدلاً من الصف العرضي */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-1">
-          {displayedArticles.map((a) => (
-            <div key={a.id} className="w-[70vw] m-2">
-              <ArticleItem article={a} />
-            </div>
-          ))}
-        </div>
-
-        {/* مكون أزرار التنقل */}
-        <Pagination currentPage={currentPage} totalPages={totalPages} />
-      </section>
     </div>
   );
 }
